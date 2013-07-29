@@ -93,7 +93,7 @@ ogham_signs = [(119,'Birch'),(217,'Rowan'),(317,'Ash'),(414,'Alder'),(512,'Willo
                 (1231,'Birch')]
 
 # define planet for day of the week
-seven_planets = [(0,'Moon'),(1,'Mars'),(2,'Mercury'),(3,'Jupiter'),(4,'Venus'),(5,'Saturn'),(6,'Sun')]
+seven_planets = [(0,'Moon'),(1,'Mars'),(2,'Mercury'),(3,'Jupiter'),(4,'Venus'),(5,'Saturday'),(6,'Sun')]
 
 # define high days
 high_days = [(2, 'The February Feast'), (3,'The Spring Feast'),(5,'The May Feast'),(6,'The Summer Feast'),

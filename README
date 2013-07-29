@@ -1,0 +1,6 @@
+This is a fun little program I wrote to find the Solstices and Equinoxes and then to calculate the cross-quarter high days used by ADF.
+
+The program uses the python ephemeris library to calcuate solstices and equinoxes. Then it finds the dates which are equadistant from those and labels them as cross-quarter dates. Sorting these dates, it assigns them Feast names can calculates how long it has been or until these days arrive.
+
+The resulting display is all on the command line and provides a table which is ordered by date. Additionally, today's date is also displayed with additional information supplied; a calculation of the Abssymal Calendar date (a calendar system which uses 13 months of 28 days), which of the seven classical planets is the day of the week, the zodiac sign for the date and the celtic tree sign. 
+
