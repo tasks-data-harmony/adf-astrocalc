@@ -54,7 +54,7 @@ def Winter_Solstice(date):
         year = str(date.year)
         date = year+'/'+month
     else:
-        null
+        month = month
     Winter_Solstice = ephem.next_solstice(date)
     Winter_Solstice = Winter_Solstice.datetime()
     return Winter_Solstice
@@ -150,9 +150,9 @@ def get_Abysmal_Date(y):
 def passage(first, today):
     #determine if day is passed or coming
     if (first < today):
-        return "days since:" + str(daily_difference(first, today))
+        return "days since: " + str(daily_difference(first, today))
     elif (today < first):
-        return  "days until:" + str(daily_difference(today, first))
+        return  "days until: " + str(daily_difference(today, first))
     elif (today == first):
         return "******** This is today. *********"
     else:
@@ -161,7 +161,14 @@ def passage(first, today):
 '''sorts the labelled days into High Days'''
 # provide a label for the astronomical point
 def label_point(x):
-    if x.month == 2:
+    today = get_Abysmal_Date(working_date)
+    #print today
+    if x == today:
+    	seventh_sign = get_seventh_sign(working_date)
+        ogham_sign = number_code_date(working_date, ogham_signs)
+        sun_sign = number_code_date(working_date, zodiacs)
+        return today + " " + seventh_sign + " " + sun_sign + " " + ogham_sign 
+    elif x.month == 2:
         label = "The February Feast"
         return label
     elif x.month == 3:    
@@ -186,7 +193,6 @@ def label_point(x):
         label = "The Winter Feast"
         return label
     else:
-        today = get_Abysmal_Date(working_date)
         seventh_sign = get_seventh_sign(working_date)
         ogham_sign = number_code_date(working_date, ogham_signs)
         sun_sign = number_code_date(working_date, zodiacs)
