@@ -154,43 +154,42 @@ def passage(first, today):
     elif (today < first):
         return  "days until: " + str(daily_difference(today, first))
     elif (today == first):
-        return "******** This is today. *********"
+        return "---------------------------"
     else:
         return "The Sky is falling."    
 
 '''sorts the labelled days into High Days'''
 # provide a label for the astronomical point
 def label_point(x):
-    today = get_Abysmal_Date(working_date)
     #print today
-    if x == today:
+    if x == working_date:
     	seventh_sign = get_seventh_sign(working_date)
         ogham_sign = number_code_date(working_date, ogham_signs)
         sun_sign = number_code_date(working_date, zodiacs)
         return today + " " + seventh_sign + " " + sun_sign + " " + ogham_sign 
     elif x.month == 2:
-        label = "The February Feast"
+        label = "  Imbolc  "
         return label
     elif x.month == 3:    
-        label = "The Spring Feast"
+        label = "  Spring Equinox  "
         return label
     elif x.month == 5:
-        label = "The May Feast"
+        label = "  Beltaine  "
         return label
     elif x.month == 6:
-        label = "The Summer Feast"
+        label = "  Summer Solstice  "
         return label
     elif x.month == 8:
-        label = "The Autumn Feast"        
+        label = "  Lughnasadh  "        
         return label
     elif x.month == 9:
-        label = "The Fall Feast"
+        label = "  Autumn Equinox  "
         return label
     elif x.month == 11:
-        label = "The Novemeber Feast"
+        label = "  Samhain  "
         return label
     elif x.month == 12:            
-        label = "The Winter Feast"
+        label = "  Winter Solstice  "
         return label
     else:
         seventh_sign = get_seventh_sign(working_date)
@@ -215,5 +214,5 @@ list_of_dates = sort_days() #produces ordered list of calculated days
 
 # big table of dates, sorted and labelled with time passage
 for n in range(len(list_of_dates)):
-    print list_of_dates[n], passage(list_of_dates[n], today), label_point(list_of_dates[n]) 
+    print passage(list_of_dates[n], today), label_point(list_of_dates[n])#, list_of_dates[n] 
   
