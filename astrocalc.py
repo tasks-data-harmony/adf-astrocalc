@@ -1,5 +1,6 @@
 from datetime import *
 import ephem
+import abysmal
 """if I am going to package this for anyone else to use, i am going to need to package pyephem as well"""
 
 
@@ -35,38 +36,6 @@ b_crossquarter = cross_quarter(previous_equinox, next_solstice)
 c_crossquarter = cross_quarter(next_solstice, next_equinox)
 
 
-'''This section is meant to lay down ground work to establishing the origin
-date for the Abysmal calendar system. For the purpose of clarity, Winter
-Solstice is defined from a Northern Hemisperic perspective according to the Abysmal Calendar system the Winter Solstice of 2012 marks the beginning of the calendar
-the first day of the year ( 0~0~0) immediately follows that day. Every Year on the Winter Solstice starts a new year
-there is no date for that day other than Winter Solstice (number)
-'''
-#establish date of origin 
-pin = ephem.next_solstice('2012/12') #calculate first New Year's Day off Winter Solstice 2012
-strip_pin = pin.datetime() #convert to datetime for calculations
-
-# determine Winter Solstice for year
-def Winter_Solstice(date):
-    year = date.year 
-    month = date.month
-    if (date.month <=7):
-        month = '12'
-        year = str(date.year)
-        date = year+'/'+month
-    else:
-        month = month
-    Winter_Solstice = ephem.next_solstice(date)
-    Winter_Solstice = Winter_Solstice.datetime()
-    return Winter_Solstice
-
-Winter_Solstice = Winter_Solstice(today) #sets date for this year's Winter Solstice
-#print "First: " + str(Winter_Solstice) #prints out Winter Solstice date.  
-
-# establish rules for counting years
-def abysmal_year():
-    abysmal_year = (Winter_Solstice.year - strip_pin.year) - 1 
-    return abysmal_year
-
 def celebrate():
     if next_solstice < next_equinox:
         if today < b_crossquarter.date():
@@ -77,10 +46,8 @@ def celebrate():
         if today < b_crossquarter.date():
             return b_crossquarter
         else:
-             return next_equinox           
+            return next_equinox           
 next_high_date = celebrate()
-
-
 
 # define zodiac sign for date
 zodiacs = [(120, 'Capricorn'), (218, 'Aquarius'), (320, 'Pisces'), (420, 'Aries'), (521, 'Taurus'),
@@ -96,8 +63,8 @@ ogham_signs = [(119,'Birch'),(217,'Rowan'),(317,'Ash'),(414,'Alder'),(512,'Willo
 seven_planets = [(0,'Moon'),(1,'Mars'),(2,'Mercury'),(3,'Jupiter'),(4,'Venus'),(5,'Saturn'),(6,'Sun')]
 
 # define high days
-high_days = [(2, 'The February Feast'), (3,'The Spring Feast'),(5,'The May Feast'),(6,'The Summer Feast'),
-             (8, 'The August Feast'),(9,'The Fall Feast'),(11,'The Novemeber Feast'),(12,'The Winter Feast')]
+high_days = [(2, 'Imbolc'), (3,'Spring Equinox'),(5,'Beltaine'),(6,'Summer Solstice'),
+             (8, 'Lughnasadh'),(9,'Autumn Equinox'),(11,'Samhain'),(12,'Winter Solstice')]
 def get_high_day(date):
     month_number = int(date.month)
     for z in high_days:
@@ -110,7 +77,7 @@ def get_seventh_sign(date):
     for z in seven_planets:
         if day_of_week == z[0]:
             return z[1]
-
+planet = get_seventh_sign(working_date)
 #iterate over a dictionary list 
 def number_code_date(date,x):
     date_number = int("".join((str(date.date().month), '%02d' % date.date().day)))
@@ -127,92 +94,38 @@ def daily_difference(first, second):
     #produce results
     return daily_difference
 
-#get abysmal_month
-def get_abysmal_month(y):
-    abysmal_month = (daily_difference(strip_pin, y))/28
-    return abysmal_month
-
-def get_Abysmal_Date(y):
-    if y == Winter_Solstice:
-        return "New Year's Day"
-    else:
-        year  = abysmal_year()
-        month = get_abysmal_month(y)
-        x =  (daily_difference(strip_pin, y))
-        day = int((x/28.0 - month)*28)
-        if month >= 13:
-            month = month -13
-        else:
-            month = month
-    return "Y"+str(year) +"~M"+str(month)+"~D"+str(day)
-
 #used to calaculate days passed or days to pass between high day and today
-def passage(first, today):
+def passage(first, working_date):
     #determine if day is passed or coming
-    if (first < today):
-        return "days since: " + str(daily_difference(first, today))
-    elif (today < first):
-        return  "days until: " + str(daily_difference(today, first))
-    elif (today == first):
-        return "---------------------------"
+    if (first < working_date):
+        return ": " +str(daily_difference(first, working_date)) + " days since " 
+    elif (working_date < first):
+        return  ": " + str(daily_difference(working_date, first)) + "  days until "
+    elif (working_date == first):
+        return "-------- This is today. --------"
     else:
         return "The Sky is falling."    
 
-'''sorts the labelled days into High Days'''
-# provide a label for the astronomical point
-def label_point(x):
-    #print today
-    if x == working_date:
-    	seventh_sign = get_seventh_sign(working_date)
-        ogham_sign = number_code_date(working_date, ogham_signs)
-        sun_sign = number_code_date(working_date, zodiacs)
-        return today + " " + seventh_sign + " " + sun_sign + " " + ogham_sign 
-    elif x.month == 2:
-        label = "  Imbolc  "
-        return label
-    elif x.month == 3:    
-        label = "  Spring Equinox  "
-        return label
-    elif x.month == 5:
-        label = "  Beltaine  "
-        return label
-    elif x.month == 6:
-        label = "  Summer Solstice  "
-        return label
-    elif x.month == 8:
-        label = "  Lughnasadh  "        
-        return label
-    elif x.month == 9:
-        label = "  Autumn Equinox  "
-        return label
-    elif x.month == 11:
-        label = "  Samhain  "
-        return label
-    elif x.month == 12:            
-        label = "  Winter Solstice  "
-        return label
-    else:
-        seventh_sign = get_seventh_sign(working_date)
-        ogham_sign = number_code_date(working_date, ogham_signs)
-        sun_sign = number_code_date(working_date, zodiacs)
-        return today + " " + seventh_sign + " " + sun_sign + " " + ogham_sign 
-
-
 def sort_days():
-    a = previous_equinox.date()
-    b = a_crossquarter.date()
-    c = last_solstice.date()
-    d = b_crossquarter.date()
-    e = next_equinox.date()
-    f = c_crossquarter.date()
-    g = next_solstice.date()
-    h = today
+    a = previous_equinox#.date()
+    b = a_crossquarter#.date()
+    c = last_solstice#.date()
+    d = b_crossquarter#.date()
+    e = next_equinox#.date()
+    f = c_crossquarter#.date()
+    g = next_solstice#.date()
+    h = working_date
     order = sorted([a,b,c,d,e,f,g,h])
     return order
 list_of_dates = sort_days() #produces ordered list of calculated days
 
-
+seventh_sign = get_seventh_sign(working_date)
+ogham_sign = number_code_date(working_date, ogham_signs)
+sun_sign = number_code_date(working_date, zodiacs)
 # big table of dates, sorted and labelled with time passage
 for n in range(len(list_of_dates)):
-    print passage(list_of_dates[n], today), label_point(list_of_dates[n])#, list_of_dates[n] 
-  
+	if list_of_dates[n] == working_date:
+		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date), seventh_sign, sun_sign, ogham_sign 
+	else:	
+		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date), get_high_day(list_of_dates[n])
+
