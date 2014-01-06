@@ -38,7 +38,7 @@ def get_Abysmal_Date(y):
 		    x =  (daily_difference(s00, y)) 
 		    year  = (Winter_Solstice.year - s00.year ) - 1
 		    month = x/29
-		    day = int((x/28.0 - month)*27.5) - 1
+		    day = int((x/28.0 - month)*27.75)-1
 		    if day > 27: #sometimes things go wrong
 				month = month +1 # so we fudge the calculations
 				day = day -28 #hopefully I will figure out how to do this better
