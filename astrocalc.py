@@ -49,18 +49,7 @@ def celebrate():
             return next_equinox           
 next_high_date = celebrate()
 
-# define zodiac sign for date
-zodiacs = [(120, 'Capricorn'), (218, 'Aquarius'), (320, 'Pisces'), (420, 'Aries'), (521, 'Taurus'),
-           (621, 'Gemini'), (722, 'Cancer'), (823, 'Leo'), (923, 'Virgo'), (1023, 'Libra'),
-           (1122, 'Scorpio'), (1222, 'Sagittarius'), (1231, 'Capricorn')]
 
-# define Ogham calendar sign for date
-ogham_signs = [(119,'Birch'),(217,'Rowan'),(317,'Ash'),(414,'Alder'),(512,'Willow'),(609,'Hawthorn'),(717,'Oak'),
-                (804,'Holly'),(901,'Hazel'),(929,'Apple'),(1027,'Ivy'),(1124,'Broom'),(1221,'Elder'),(1223,'Pine'),
-                (1231,'Birch')]
-
-# define planet for day of the week
-seven_planets = [(0,'Moon'),(1,'Mars'),(2,'Mercury'),(3,'Jupiter'),(4,'Venus'),(5,'Saturn'),(6,'Sun')]
 
 # define high days
 high_days = [(2, 'Imbolc'), (3,'Spring Equinox'),(5,'Beltaine'),(6,'Summer Solstice'),
@@ -72,12 +61,12 @@ def get_high_day(date):
             return z[1]
 
 # fetch planet name for day of week 
-def get_seventh_sign(date):
-    day_of_week = working_date.weekday()
-    for z in seven_planets:
-        if day_of_week == z[0]:
-            return z[1]
-planet = get_seventh_sign(working_date)
+#def get_seventh_sign(date):
+#    day_of_week = working_date.weekday()
+#    for z in seven_planets:
+#        if day_of_week == z[0]:
+#            return z[1]
+#planet = get_seventh_sign(working_date)
 #iterate over a dictionary list 
 def number_code_date(date,x):
     date_number = int("".join((str(date.date().month), '%02d' % date.date().day)))
@@ -98,11 +87,11 @@ def daily_difference(first, second):
 def passage(first, working_date):
     #determine if day is passed or coming
     if (first < working_date):
-        return ": " +str(daily_difference(first, working_date)) + " days since " 
+        return str(daily_difference(first, working_date)) + " days since " 
     elif (working_date < first):
-        return  ": " + str(daily_difference(working_date, first)) + "  days until "
+        return  str(daily_difference(working_date, first)) + " days until "
     elif (working_date == first):
-        return "-------- This is today. --------"
+        return "~TODAY's Abysmal Date~ "
     else:
         return "The Sky is falling."    
 
@@ -119,13 +108,16 @@ def sort_days():
     return order
 list_of_dates = sort_days() #produces ordered list of calculated days
 
-seventh_sign = get_seventh_sign(working_date)
-ogham_sign = number_code_date(working_date, ogham_signs)
-sun_sign = number_code_date(working_date, zodiacs)
+# seventh_sign = get_seventh_sign(working_date)
+# ogham_sign = number_code_date(working_date, ogham_signs)
+#sun_sign = number_code_date(working_date, zodiacs)
 # big table of dates, sorted and labelled with time passage
 for n in range(len(list_of_dates)):
 	if list_of_dates[n] == working_date:
-		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date), seventh_sign, sun_sign, ogham_sign 
+		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date) # seventh_sign, sun_sign, ogham_sign 
+            #print list_of_dates[n], passage(list_of_dates[n], working_date), #seventh_sign, sun_sign, ogham_sign
+            
 	else:	
 		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date), get_high_day(list_of_dates[n])
-
+            #print list_of_dates[n], passage(list_of_dates[n], working_date), get_high_day(list_of_dates[n])
+                

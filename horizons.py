@@ -46,8 +46,8 @@ def convertTZ(x):
 	
 	
 	
-print "twilight begins at " + convertTZ(beg_twilight)
-print "the crack of dawn " + convertTZ(sunrise)
-print " high noon is at " + convertTZ(noon)
-print "the sun sets at " + convertTZ(sunset)
-print "twilight ends at "+convertTZ(end_twilight)
+print "_ twilight   " + convertTZ(beg_twilight) + "_"
+print "dawn break " + convertTZ(sunrise)  
+print "high noon  " + convertTZ(noon) 
+print "dusk sets  " + convertTZ(sunset) 
+print "_ twilight   "+convertTZ(end_twilight) + "_"
