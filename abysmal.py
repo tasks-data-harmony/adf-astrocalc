@@ -37,13 +37,9 @@ def get_Abysmal_Date(y):
 	else:
 		    x =  (daily_difference(s00, y)) 
 		    year  = (Winter_Solstice.year - s00.year ) 
-		    #month = x/29
-		    #print month
+		    
 		    z = (daily_difference(last_solstice,y))
 		    month = z/28
-		    # month
-		    #day = z/(month + 1)
-		    #day = int(z/28.0 )
 		    day = int((z/28.0 - month)*27.75)
 		    #print day
 		    if day > 365: #sometimes things go wrong
@@ -60,9 +56,3 @@ def get_Abysmal_Date(y):
     	return str(year) +"~"+str(month)+"~"+str(day)
 
 
-second1 = ephem.Date('2010/12/22')
-s1 = second1.datetime()
-s11 = get_Abysmal_Date(s1)
-#print s11
-today0 = get_Abysmal_Date(working_date)
-#print today0

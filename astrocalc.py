@@ -60,13 +60,7 @@ def get_high_day(date):
         if month_number == z[0]:
             return z[1]
 
-# fetch planet name for day of week 
-#def get_seventh_sign(date):
-#    day_of_week = working_date.weekday()
-#    for z in seven_planets:
-#        if day_of_week == z[0]:
-#            return z[1]
-#planet = get_seventh_sign(working_date)
+
 #iterate over a dictionary list 
 def number_code_date(date,x):
     date_number = int("".join((str(date.date().month), '%02d' % date.date().day)))
@@ -108,16 +102,11 @@ def sort_days():
     return order
 list_of_dates = sort_days() #produces ordered list of calculated days
 
-# seventh_sign = get_seventh_sign(working_date)
-# ogham_sign = number_code_date(working_date, ogham_signs)
-#sun_sign = number_code_date(working_date, zodiacs)
-# big table of dates, sorted and labelled with time passage
+
 for n in range(len(list_of_dates)):
 	if list_of_dates[n] == working_date:
-		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date) # seventh_sign, sun_sign, ogham_sign 
-            #print list_of_dates[n], passage(list_of_dates[n], working_date), #seventh_sign, sun_sign, ogham_sign
+		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date) 
             
 	else:	
 		print abysmal.get_Abysmal_Date(list_of_dates[n]), passage(list_of_dates[n], working_date), get_high_day(list_of_dates[n])
-            #print list_of_dates[n], passage(list_of_dates[n], working_date), get_high_day(list_of_dates[n])
-                
+            
