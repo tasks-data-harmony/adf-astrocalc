@@ -12,6 +12,7 @@ def get_abysmal_date(gregorian_date):
     """
     # Define the Abysmal Calendar Epoch (May 26, 1492 - Julian Calendar)
     epoch_start = datetime(1492, 5, 26)  # Julian date converted to datetime
+    # epoch_start = datetime(1492, 12, 20) # My Personal Start
 
     # Calculate total days since the epoch
     days_since_epoch = (gregorian_date - epoch_start).days
@@ -67,6 +68,6 @@ def get_abysmal_date(gregorian_date):
     return f"{abysmal_year}{month_display}{day} {astro_symbols[weekday]}"
 
 # Example Usage:
-today = datetime(2025, 3, 15)  # Replace with any date
+today = datetime(2023, 1, 1)  # Replace with any date
 abysmal_date = get_abysmal_date(today)
 print(abysmal_date)
