@@ -10,64 +10,50 @@ def get_abysmal_date(gregorian_date):
     Converts a Gregorian date to the Abysmal Calendar format (Year ~ Month ~ Day).
     Includes correct weekday shifting, New Year's Day (♆), and Leap Day (⛢).
     """
-    # Define the Abysmal Calendar Epoch (May 26, 1492 - Julian Calendar)
     epoch_start = datetime(1492, 5, 26)  # Julian date converted to datetime
-    # epoch_start = datetime(1492, 12, 20) # My Personal Start
 
-    # Calculate total days since the epoch
     days_since_epoch = (gregorian_date - epoch_start).days
 
-    # Compute the Abysmal Year
-    abysmal_year = days_since_epoch // 365  # 365-day cycles determine year
+    abysmal_year = days_since_epoch // 365  
     days_in_current_year = days_since_epoch % 365
 
-    # Determine if it's a Leap Year (Every 4 years, but skips once every 128 years)
     is_leap_year = (abysmal_year % 4 == 0) and not (abysmal_year % 128 == 0)
 
-    # Define Astro Symbols
     astro_symbols = {
-        "NYD": "♆",  # Neptune
-        "Leap Day": "⛢",  # Uranus
-        "Saturday": "♄",  # Saturn
-        "Sunday": "☉",  # Sun
-        "Monday": "☽",  # Moon
-        "Tuesday": "♂",  # Mars
-        "Wednesday": "☿",  # Mercury
-        "Thursday": "♃",  # Jupiter
-        "Friday": "♀",  # Venus
+        "NYD": "♆", "Leap Day": "⛢", "Saturday": "♄", "Sunday": "☉",
+        "Monday": "☽", "Tuesday": "♂", "Wednesday": "☿",
+        "Thursday": "♃", "Friday": "♀"
     }
 
-    # New Year's Day (NYD) is on the Winter Solstice (excluded from the week)
     if days_in_current_year == 0:
         return f"{abysmal_year} {astro_symbols['NYD']}"
 
-    # Adjust for Leap Day (occurs the day after NYD every 4 years)
     if is_leap_year and days_in_current_year == 1:
         return f"{abysmal_year} {astro_symbols['Leap Day']}"
 
-    # Exclude NYD & count from Month 1, Day 1
     adjusted_day = days_in_current_year - (1 if is_leap_year else 0)
 
-    # Compute month and day
     month = (adjusted_day // 28) + 1
     day = (adjusted_day % 28) + 1
-
-    # Apply strikethrough to the entire month string (including spaces)
     month_display = strikethrough(str(month))
 
-    # Calculate weekday shift (28-year rotation)
-    base_weekday = "Saturday"  # Month 1, Day 1 always starts on Saturday
+    base_weekday = "Saturday"  
     weekdays = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
-    # Shift the weekday based on how many days have passed (accounting for NYD)
     total_shift_days = (days_since_epoch - (abysmal_year * 365)) % 7
     weekday_index = (weekdays.index(base_weekday) + total_shift_days) % 7
     weekday = weekdays[weekday_index]
 
-    # Format the output correctly with spaced-out strikethrough month
-    return f"{abysmal_year}{month_display}{day} {astro_symbols[weekday]}"
+    return f"{abysmal_year} ~ {month_display} ~ {day} {astro_symbols[weekday]}"
 
-# Example Usage:
-today = datetime(2023, 1, 1)  # Replace with any date
-abysmal_date = get_abysmal_date(today)
-print(abysmal_date)
+while True:
+    input_date_str = input("Enter a date (MM/DD/YYYY), or press Enter to exit: ")
+    if not input_date_str:
+        break  # Exit the loop if the user just presses Enter
+
+    try:
+        input_date = datetime.strptime(input_date_str, '%m/%d/%Y')
+        abysmal_date = get_abysmal_date(input_date)
+        print(abysmal_date)
+    except ValueError:
+        print("Invalid date format. Please try again.")
