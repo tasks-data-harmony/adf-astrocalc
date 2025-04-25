@@ -44,7 +44,7 @@ def get_abysmal_date(gregorian_date):
     weekday_index = (weekdays.index(base_weekday) + total_shift_days) % 7
     weekday = weekdays[weekday_index]
 
-    return f"{abysmal_year} ~ {month_display} ~ {day} {astro_symbols[weekday]}"
+    return f"{abysmal_year}~{month_display}~{day}{astro_symbols[weekday]}"
 
 while True:
     input_date_str = input("Enter a date (MM/DD/YYYY), or press Enter to exit: ")
